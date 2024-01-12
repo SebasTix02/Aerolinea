@@ -1,0 +1,68 @@
+<mat-toolbar fxLayout fxLayoutAlign="space-between center">
+    <h3>{{ title }}</h3>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-dialog-content>
+    <form fxLayout="column" [formGroup]="group">
+        <mat-form-field appearance="outline">
+            <mat-label>DNI</mat-label>
+            <input type="text" matInput formControlName="dni">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input type="text" matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Apellido</mat-label>
+            <input type="text" matInput formControlName="lastName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input type="date" matInput formControlName="birthdayDate">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Género</mat-label>
+            <input type="text" matInput formControlName="gender">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Estado Civil</mat-label>
+            <input type="text" matInput formControlName="civilStatus">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Discapacidad</mat-label>
+            <input type="text" matInput formControlName="disability">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Nombre de Usuario</mat-label>
+            <input type="text" matInput formControlName="userName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input type="password" matInput formControlName="password">
+        </mat-form-field>
+      
+        <div fxLayout fxLayoutAlign="end" fxLayoutGap="10px">
+            <button 
+                mat-raised-button
+                color="primary"
+                type="button"
+                [disabled]="group.invalid"
+                (click)="save()">
+                Grabar
+            </button>
+            <button 
+                mat-button
+                color="primary"
+                type="button"
+                mat-dialog-close>
+                Cancelar
+            </button>            
+        </div>        
+    </form>
+</mat-dialog-content>

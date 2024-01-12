@@ -1,0 +1,33 @@
+mat-sidenav-content {
+    min-height: 100vh;
+  }
+  
+  mat-sidenav {
+    max-width: 280px;
+    background-color: rgb(22, 81, 92);
+  }
+  
+  .elemI{
+    padding: 22px 0 51px 0;
+}
+h3{
+  font-style: 'Oxygen', sans-serif;
+}
+img{
+    width: 180px;
+    height: 35px;
+    padding: 0 0 10px 0;
+}
+.elements{
+    padding: 20px 40px 0px 30px;
+    color: rgb(0, 0, 0);
+    min-height: 65px;
+    background: linear-gradient(rgb(22, 81, 92),rgb(255, 255, 255)20%);
+    text-align: center;
+    font-style: 'Oxygen', sans-serif;
+    border-bottom: 10px solid rgb(22, 81, 92);
+}
+
+.mat-icon-custom-color {
+  color: rgb(22, 81, 92); /* Cualquier código de color hexadecimal, RGB, etc. */
+}
