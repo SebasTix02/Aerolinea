@@ -7,12 +7,6 @@ const routes: Routes = [
     path:'', component:PageLoginComponent
   },
   {
-    path:'aviones',
-    canLoad:[],
-    loadChildren:() =>
-      import('./aviones/aviones.module').then((m)=>m.AvionesModule)
-  },
-  {
     path:'compra',
     canLoad:[],
     loadChildren:() =>

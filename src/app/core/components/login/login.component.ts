@@ -34,7 +34,7 @@ export class LoginComponent {
         if (response.success) {
           console.log('Inicio de sesión exitoso');
           this.authService.isLoggedIn = true; // Utiliza el setter para asignar el valor
-          this.router.navigate(['centros']);
+          this.router.navigate(['compra']);
         } else {
           console.error('Credenciales incorrectas');
         }
