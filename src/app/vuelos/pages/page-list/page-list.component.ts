@@ -19,7 +19,7 @@ import { saveAs } from 'file-saver';
 export class PageListComponent {
   records: any[] = [];
   metaDataColumns: MetaDataColumn[] = [
-    { field: "idFlight", title: "VUELO" },
+    { field: "IdFlight", title: "VUELO" },
     { field: "name", title: "NOMBRE" },
     { field: "departureDate", title: "FECHA DE SALIDA" },
     { field: "arrivalDate", title: "FECHA DE LLEGADA" },
@@ -29,6 +29,7 @@ export class PageListComponent {
 
   ];
   data: any[] = [];
+  
   totalRecords = this.records.length;
 
   keypadButtons: KeypadButton[] = [
@@ -80,9 +81,10 @@ export class PageListComponent {
   }
 
   delete(idFlight: any) {
+    console.log(idFlight)
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '300px',
-      data: '¿Estás seguro de que deseas eliminar este avion?'
+      data: '¿Estás seguro de que deseas eliminar este vuelo?'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -91,7 +93,7 @@ export class PageListComponent {
           this.loadFlights();
           this.showMessage('Centro eliminado exitosamente');
         }).catch((error) => {
-          this.showMessage('No se puede eliminar el centro. Tiene registros enlazados.');
+          this.showMessage('No se puede eliminar el vuelo.');
         });
       }
     });

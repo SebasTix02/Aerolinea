@@ -53,13 +53,14 @@ export class FormComponent {
     const record = this.group.value;
 
     if (this.data) {
-      const purchaseData = { id: this.data.idFlightPurchase, purchase: record };
-      this.compraService.updatePurchase(purchaseData).pipe(
+      //const purchaseData = { id: this.data.idFlightPurchase, purchase: record };
+      this.compraService.updatePurchase(record).pipe(
         catchError(error => {
           console.error(error);
           return of(null);
         })
       ).subscribe(result => {
+        console.log(result)
         if (result !== null) {
           this.reference.close(result);
         }

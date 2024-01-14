@@ -59,8 +59,7 @@ export class FormComponent {
     const record = this.group.value;
 
     if (this.data) {
-      const flightData = { id: this.data.idFlight, flight: record };
-      this.flightsService.updateFlight(flightData).pipe(
+      this.flightsService.updateFlight(record).pipe(
         catchError(error => {
           console.error(error);
           return of(null);

@@ -65,8 +65,7 @@ export class FormComponent {
     const record = this.group.value;
 
     if (this.data) {
-      const UsersData = { dni: this.data.dni, usuario: record };
-      this.usuarioService.updateUsuario(UsersData).pipe(
+      this.usuarioService.updateUsuario(record).pipe(
         catchError(error => {
           console.error(error);
           return of(null);

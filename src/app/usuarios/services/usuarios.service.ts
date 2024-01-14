@@ -8,12 +8,13 @@ import { User } from '../model/usuario.model';
 })
 export class UsuariosService {
 
-  private apiUrl = 'http://localhost:3000/api/usuarios';
+  private apiUrl = 'http://localhost/proyecto/ServiceUser.svc/';
 
   constructor(private http: HttpClient) { }
 
   loadUsuarios(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    let uri = this.apiUrl + "FindAllUsers"
+    return this.http.get(uri);
   }
 
   loadUsuario(dni: string): Observable<any> {
@@ -22,37 +23,22 @@ export class UsuariosService {
   }
 
   addUsuario(usuario: User): Observable<any> {
-    return this.http.post(this.apiUrl, usuario);
+    let uri = this.apiUrl + "AddUser"
+    return this.http.post(uri, usuario);
   }
 
-  updateUsuario(usuarioData: { dni: string, usuario: User }): Observable<any> {
-    const usuarioUrl = `${this.apiUrl}/${usuarioData.dni}`;
-    return this.http.put(usuarioUrl, usuarioData.usuario);
+  updateUsuario(usuario: User): Observable<any> {
+    let uri = this.apiUrl + "Edit"
+    return this.http.put(uri, usuario);
   }
 
   async deleteUsuario(dni: string): Promise<void> {
     try {
-      // Verificar si hay registros relacionados antes de eliminar
-      const hasRelatedRecords = await this.checkForRelatedRecords(dni);
-
-      // Si hay registros relacionados, lanzar un error
-      if (hasRelatedRecords) {
-        throw new Error('No se puede eliminar porque tiene registros enlazados.');
-      }
-      
-      const usuarioUrl = `${this.apiUrl}/${dni}`;
-      await this.http.delete(usuarioUrl).toPromise();
+      let uri = this.apiUrl + "DeleteUser/"+dni
+      await this.http.delete(uri).toPromise();
     } catch (error) {
       throw error;
     }
   }
 
-  private async checkForRelatedRecords(dni: string): Promise<boolean> {
-    try {
-      const response = await this.http.get<boolean>(`${this.apiUrl}/hasRelatedRecords/${dni}`).toPromise();
-      return response || false;  // Si response es undefined, asigna false
-    } catch (error) {
-      throw error;
-    }
-  }
 }

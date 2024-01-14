@@ -8,12 +8,13 @@ import { Flight } from '../model/vuelos.model';
 })
 export class FlightsService {
 
-  private apiUrl = 'http://localhost:3000/api/vuelos';
+  private apiUrl = 'http://localhost/proyecto/ServiceFlight.svc/';
 
   constructor(private http: HttpClient) { }
 
   loadFlights(): Observable<Flight[]> {
-    return this.http.get<Flight[]>(this.apiUrl);
+    let uri = this.apiUrl + "FindAllFlights"
+    return this.http.get<Flight[]>(uri);
   }
 
   loadFlight(idFlight: number): Observable<Flight> {
@@ -22,37 +23,22 @@ export class FlightsService {
   }
 
   addFlight(flight: Flight): Observable<any> {
-    return this.http.post(this.apiUrl, flight);
+    let uri = this.apiUrl + "AddFlight"
+    return this.http.post(uri, flight);
   }
 
-  updateFlight(flightData: { id: number, flight: Flight }): Observable<any> {
-    const flightUrl = `${this.apiUrl}/${flightData.id}`;
-    return this.http.put(flightUrl, flightData.flight);
+  updateFlight(flight: Flight): Observable<any> {
+    let uri = this.apiUrl + "EditFlight"
+    return this.http.put(uri, flight);
   }
 
   async deleteFlight(idFlight: number): Promise<void> {
     try {
-      // Verificar si hay registros relacionados antes de eliminar
-      const hasRelatedRecords = await this.checkForRelatedRecords(idFlight);
-
-      // Si hay registros relacionados, lanzar un error
-      if (hasRelatedRecords) {
-        throw new Error('No se puede eliminar porque tiene registros enlazados.');
-      }
-
-      const flightUrl = `${this.apiUrl}/${idFlight}`;
-      await this.http.delete(flightUrl).toPromise();
+      let uri = this.apiUrl + "DeleteFlight/"+idFlight
+      await this.http.delete(uri).toPromise();
     } catch (error) {
       throw error;
     }
   }
 
-  private async checkForRelatedRecords(idFlight: number): Promise<boolean> {
-    try {
-      const response = await this.http.get<boolean>(`${this.apiUrl}/hasRelatedRecords/${idFlight}`).toPromise();
-      return response || false;  // Si response es undefined, asigna false
-    } catch (error) {
-      throw error;
-    }
-  }
 }

@@ -8,12 +8,13 @@ import { Purchase } from '../model/compra.model';
 })
 export class CompraService {
 
-  private apiUrl = 'http://localhost:3000/api/compras';
+  private apiUrl = 'http://localhost/proyecto/ServicePurchase.svc/';
 
   constructor(private http: HttpClient) { }
 
   loadPurchases(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    let uri = this.apiUrl + "FindAllPurchases"
+    return this.http.get(uri);
   }
 
   loadPurchase(purchaseId: number): Observable<any> {
@@ -22,35 +23,23 @@ export class CompraService {
   }
 
   addPurchase(purchase: Purchase): Observable<any> {
-    return this.http.post(this.apiUrl, purchase);
+    let uri = this.apiUrl + "AddPurchase"
+    console.log(purchase)
+    return this.http.post(uri, purchase);
   }
 
-  updatePurchase(purchaseData: { id: number, purchase: Purchase }): Observable<any> {
-    const purchaseUrl = `${this.apiUrl}/${purchaseData.id}`;
-    return this.http.put(purchaseUrl, purchaseData.purchase);
+  updatePurchase(purchase: Purchase): Observable<any> {
+    let uri = this.apiUrl + "EditPurchase"
+    console.log(purchase)
+    return this.http.put(uri, purchase);
   }
 
   async deletePurchase(purchaseId: number): Promise<void> {
     try {
-      // Verificar si hay registros relacionados antes de eliminar
-      const hasRelatedRecords = await this.checkForRelatedRecords(purchaseId);
+      let uri = this.apiUrl + "DeletePurchase/"+purchaseId
+      console.log(uri)
 
-      // Si hay registros relacionados, lanzar un error
-      if (hasRelatedRecords) {
-        throw new Error('No se puede eliminar porque tiene registros enlazados.');
-      }
-      
-      const purchaseUrl = `${this.apiUrl}/${purchaseId}`;
-      await this.http.delete(purchaseUrl).toPromise();
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  private async checkForRelatedRecords(purchaseId: number): Promise<boolean> {
-    try {
-      const response = await this.http.get<boolean>(`${this.apiUrl}/hasRelatedRecords/${purchaseId}`).toPromise();
-      return response || false;  // Si response es undefined, asigna false
+      await this.http.delete(uri).toPromise();
     } catch (error) {
       throw error;
     }
