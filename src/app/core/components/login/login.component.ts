@@ -34,7 +34,7 @@ export class LoginComponent {
         console.log(response  == true)
         if (response == true) {
           console.log('Inicio de sesión exitoso');
-          this.authService.isLoggedIn = true; 
+          this.authService.isLoggedIn = true; // Utiliza el setter para asignar el valor
           this.router.navigate(['vuelos']);
         } else {
           console.error('Credenciales incorrectas');

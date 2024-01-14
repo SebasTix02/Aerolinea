@@ -13,7 +13,6 @@ export interface IMenu{
 })
 export class MenuService {
   private listMenu:IMenu[] = [
-    {title: 'Aviones', url:'/aviones', icon:'avion'},
     {title: 'Vuelos', url:'/vuelos', icon:'vuelos'},
     {title: 'Compra', url:'/compra', icon:'compras'},
     {title: 'Usuarios', url:'/usuarios', icon:'usuarios'},
