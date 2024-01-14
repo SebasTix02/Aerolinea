@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-
+  urlFlights = '/ServiceUser.svc/Login'
   private _isLoggedIn = false;
 
   constructor(private httpClient: HttpClient) {}
@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   login(user: string, password: string): Observable<any> {
-    return this.httpClient.post<any>('http://localhost:3000/api/auth/login', { user, password });
+    return this.httpClient.post<any>(this.urlFlights, { user, password });
   }
 
   logout(): void {

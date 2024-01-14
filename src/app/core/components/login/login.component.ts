@@ -13,7 +13,7 @@ export class LoginComponent {
   togglePassword = true;
   group: FormGroup;
   hide = true;
-
+  urlFlights = '/ServiceUser.svc/Login'
   constructor(
     private httpClient: HttpClient,
     private router: Router,
@@ -28,13 +28,14 @@ export class LoginComponent {
   login() {
     const user = this.group.get('user')?.value;
     const password = this.group.get('password')?.value;
-
-    this.httpClient.post<any>('http://localhost:3000/api/auth/login', { user, password }).subscribe(
+    console.log({"password":password,"userName":user})
+    this.httpClient.post<any>('http://localhost/proyecto/ServiceUser.svc/Login', {"password":password,"userName":user}).subscribe(
       (response) => {
-        if (response.success) {
+        console.log(response  == true)
+        if (response == true) {
           console.log('Inicio de sesión exitoso');
-          this.authService.isLoggedIn = true; // Utiliza el setter para asignar el valor
-          this.router.navigate(['centros']);
+          this.authService.isLoggedIn = true; 
+          this.router.navigate(['vuelos']);
         } else {
           console.error('Credenciales incorrectas');
         }
