@@ -14,7 +14,7 @@ export class LoginComponent {
   hide = true;
   isLoginForm = true;
   group: FormGroup;
-
+  groupRegister: FormGroup;
   hidePassword = true;
   hideConfirmPassword = true;
 
@@ -29,10 +29,23 @@ export class LoginComponent {
       password: new FormControl(null, Validators.required),
       confirmPassword: new FormControl(null), // Agrega este control sin validador
     });
+    this.groupRegister = new FormGroup({
+      password: new FormControl(null, Validators.required),
+      confirmPassword: new FormControl(null), 
+      name: new FormControl(null),
+      dni: new FormControl(null),
+      birthdayDate: new FormControl(null),
+      gender: new FormControl(null),
+      civilStatus: new FormControl(null),
+      disability: new FormControl(null),
+      userName: new FormControl(null),
+      email: new FormControl(null),
+      lastName: new FormControl(null)
+    });
 
     // Establece el validador solo para el formulario de registro
     if (!this.isLoginForm) {
-      this.group.get('confirmPassword')?.setValidators([Validators.required]);
+      this.groupRegister.get('confirmPassword')?.setValidators([Validators.required]);
     }
   }
 
@@ -68,7 +81,7 @@ export class LoginComponent {
     if (this.isLoginForm) {
       this.group.get('confirmPassword')?.clearValidators();
     } else {
-      this.group.get('confirmPassword')?.setValidators([Validators.required]);
+      this.groupRegister.get('confirmPassword')?.setValidators([Validators.required]);
     }
 
     this.group.get('confirmPassword')?.updateValueAndValidity();
@@ -85,22 +98,46 @@ export class LoginComponent {
   }
 
   registro() {
-    const user = this.group.get('user')?.value;
-    const password = this.group.get('password')?.value;
-    const confirmPassword = this.group.get('confirmPassword')?.value;
+    const password = this.groupRegister.get('password')?.value;
+    const confirmPassword = this.groupRegister.get('confirmPassword')?.value;
+    const dni = this.groupRegister.get('dni')?.value;
+    const name = this.groupRegister.get('name')?.value;
+    const lastName = this.groupRegister.get('lastName')?.value;
+    const birthdayDate = this.groupRegister.get('birthdayDate')?.value;
+    const gender = this.groupRegister.get('gender')?.value;
+    const civilStatus = this.groupRegister.get('civilStatus')?.value;
+    const disability = this.groupRegister.get('disability')?.value;
+    const userName = this.groupRegister.get('userName')?.value;
+    const email = this.groupRegister.get('email')?.value;
 
     if (this.isLoginForm) {
       // Aquí implementa la lógica de inicio de sesión
-      console.log('Inicio de sesión', user, password);
     } else {
       // Aquí implementa la lógica de registro
       // Verifica si las contraseñas coinciden
       if (password !== confirmPassword) {
-        
+        alert("Las contraseñas deben coincidir")
         return;
       }
-
-      console.log('Registro exitoso', user, password);
+      
+      console.log('Registro de sesión', password, dni, birthdayDate, gender, civilStatus, disability, userName, email, name);
+      this.httpClient.post<any>('http://localhost/proyecto/ServiceUser.svc/Register', {"birthdayDate":birthdayDate,
+      "civilStatus":civilStatus,"disability":disability,"dni":dni,"gender":gender,"lastName":lastName,
+      "name":name,"email":email,"password":password,"userName":userName}).subscribe(
+      (response) => {
+        console.log(response  == true)
+        if (response == true) {
+          console.log('Registro exitoso');
+          this.authService.isLoggedIn = true; 
+          this.router.navigate(['vuelos']);
+        } else {
+          console.error('Error');
+        }
+      },
+      (error) => {
+        console.error('Error en la solicitud al backend:', error);
+      }
+    );
     }
   }
 }
